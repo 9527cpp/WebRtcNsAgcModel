@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "noise_suppression.h"
+#include "noise_suppression_x.h"
 #include <unistd.h>
 
 //focus webrtc only process 10ms data
@@ -12,17 +12,17 @@
 void * ANS_Init(int nSampleRate)
 {
     void *ansInst = NULL;
-    ansInst = WebRtcNs_Create();
+    ansInst = WebRtcNsx_Create();
     if (ansInst == NULL){
         printf("ans init failed\r\n");
     }
-    if(0 != WebRtcNs_Init(ansInst,nSampleRate))
+    if(0 != WebRtcNsx_Init(ansInst,nSampleRate))
         goto FAILED;
-    if(0 !=WebRtcNs_set_policy(ansInst,1))
+    if(0 !=WebRtcNsx_set_policy(ansInst,3))
         goto FAILED;
     return ansInst;
 FAILED:
-    WebRtcNs_Free(ansInst);
+    WebRtcNsx_Free(ansInst);
     ansInst = NULL;
     return ansInst;
 }
@@ -35,28 +35,28 @@ int ANS_Sample(void * pInstance,void * pBuffIn,void *pBuffOut,int nLen)
     int nTotal = (nLen / SAMPLE_COUNT);
     short * input = (short *)pBuffIn;
     short * output = (short *)pBuffOut;     
-    int numbands = 2;
+    int numbands = 1;
     /* short inputL [SAMPLE_COUNT/2]; */
-    float outNear[SAMPLE_COUNT];
-    float inNear[SAMPLE_COUNT];
+    /* float outNear[SAMPLE_COUNT]; */
+    /* float inNear[SAMPLE_COUNT]; */
     
     for(int j = 0;j< nTotal;j++){
-        memset(inNear,0,sizeof(float)*SAMPLE_COUNT);
-        memset(outNear,0,sizeof(float)*SAMPLE_COUNT);
-        for(int i = 0;i < SAMPLE_COUNT;i++)
-        {
-            inNear[i] = *(input + i);
-        }
-        float *const p = inNear;
-        const float * const*ptrp = &p;
-        float *const q = outNear;
-        float * const*ptrq = &q;
-        WebRtcNs_Analyze(pInstance,ptrp);
-        WebRtcNs_Process(pInstance,ptrp,numbands,ptrq);
-        for(int i = 0;i < SAMPLE_COUNT;i++)
-        {
-            *(output +i) = (short)outNear[i];
-        }
+        /* memset(inNear,0,sizeof(float)*SAMPLE_COUNT); */
+        /* memset(outNear,0,sizeof(float)*SAMPLE_COUNT); */
+        /* for(int i = 0;i < SAMPLE_COUNT;i++) */
+        /* { */
+        /*     inNear[i] = *(input + i); */
+        /* } */
+        /* float *const p = inNear; */
+        /* const float * const*ptrp = &p; */
+        /* float *const q = outNear; */
+        /* float * const*ptrq = &q; */
+        /* WebRtcNs_Analyze(pInstance,&input); */
+        WebRtcNsx_Process(pInstance,&input,numbands,&output);
+        /* for(int i = 0;i < SAMPLE_COUNT;i++) */
+        /* { */
+        /*     *(output +i) = (short)outNear[i]; */
+        /* } */
         input += SAMPLE_COUNT;
         output += SAMPLE_COUNT;
     }
@@ -65,7 +65,7 @@ int ANS_Sample(void * pInstance,void * pBuffIn,void *pBuffOut,int nLen)
 
 void ANS_DeInit(void *pInstance)
 {
-    WebRtcNs_Free(pInstance);
+    WebRtcNsx_Free(pInstance);
     pInstance = NULL;
 }
 

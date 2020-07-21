@@ -26,4 +26,12 @@
 //
 // Return value     : Result of the sqrt calculation
 //
+#if defined(__cplusplus)
+extern "C"{
+#endif
+
 int32_t WebRtcSpl_SqrtFloor(int32_t value);
+
+#if defined(__cplusplus)
+}
+#endif

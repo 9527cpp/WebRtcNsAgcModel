@@ -13,7 +13,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include "common_audio/third_party/spl_sqrt_floor/spl_sqrt_floor.h"
 #include "common_audio/signal_processing/include/real_fft.h"
 #include "modules/audio_processing/legacy_ns/nsx_core.h"
 #include "rtc_base/checks.h"
