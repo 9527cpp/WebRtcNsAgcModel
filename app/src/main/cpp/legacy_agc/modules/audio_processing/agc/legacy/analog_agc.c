@@ -1133,7 +1133,7 @@ int WebRtcAgc_get_config(void *agcInst, WebRtcAgcConfig *config) {
 }
 
 void *WebRtcAgc_Create() {
-    LegacyAgc *stt = malloc(sizeof(LegacyAgc));
+    LegacyAgc *stt =(LegacyAgc *) malloc(sizeof(LegacyAgc));
 
     stt->initFlag = 0;
     stt->lastError = 0;

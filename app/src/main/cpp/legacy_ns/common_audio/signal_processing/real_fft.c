@@ -25,7 +25,7 @@ struct RealFFT *WebRtcSpl_CreateRealFFT(int order) {
         return NULL;
     }
 
-    self = malloc(sizeof(struct RealFFT));
+    self = (struct RealFFT *)malloc(sizeof(struct RealFFT));
     if (self == NULL) {
         return NULL;
     }

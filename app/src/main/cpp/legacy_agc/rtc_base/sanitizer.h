@@ -14,7 +14,7 @@
 #include <stddef.h>  // For size_t.
 
 #ifdef __cplusplus
-#include "absl/meta/type_traits.h"
+/* #include "absl/meta/type_traits.h" */
 #endif
 
 #if defined(__has_feature)
@@ -96,13 +96,13 @@ static inline void rtc_MsanCheckInitialized(const volatile void *ptr,
 namespace rtc {
 namespace sanitizer_impl {
 
-template <typename T>
-constexpr bool IsTriviallyCopyable() {
-  return static_cast<bool>(absl::is_trivially_copy_constructible<T>::value &&
-                           (absl::is_trivially_copy_assignable<T>::value ||
-                            !std::is_copy_assignable<T>::value) &&
-                           absl::is_trivially_destructible<T>::value);
-}
+/* template <typename T> */
+/* constexpr bool IsTriviallyCopyable() { */
+/*   return static_cast<bool>(absl::is_trivially_copy_constructible<T>::value && */
+/*                            (absl::is_trivially_copy_assignable<T>::value || */
+/*                             !std::is_copy_assignable<T>::value) && */
+/*                            absl::is_trivially_destructible<T>::value); */
+/* } */
 
 }  // namespace sanitizer_impl
 

@@ -286,6 +286,7 @@ Appendix :
     w[] and ip[] are compatible with all routines.
 */
 
+#include "fft4g.h"
 #include <stddef.h>
 
 static void makewt(size_t nw, size_t *ip, float *w);

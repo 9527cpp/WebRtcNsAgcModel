@@ -17,7 +17,7 @@
 #include "modules/audio_processing/legacy_ns/nsx_defines.h"
 
 NsxHandle *WebRtcNsx_Create() {
-    NoiseSuppressionFixedC *self = malloc(sizeof(NoiseSuppressionFixedC));
+    NoiseSuppressionFixedC *self =(NoiseSuppressionFixedC *) malloc(sizeof(NoiseSuppressionFixedC));
     self->real_fft = NULL;
     self->initFlag = 0;
     return (NsxHandle *) self;

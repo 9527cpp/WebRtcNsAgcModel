@@ -18,7 +18,7 @@
 #include "modules/audio_processing/legacy_ns/ns_core.h"
 
 NsHandle *WebRtcNs_Create() {
-    NoiseSuppressionC *self = malloc(sizeof(NoiseSuppressionC));
+    NoiseSuppressionC *self =(NoiseSuppressionC *) malloc(sizeof(NoiseSuppressionC));
     self->initFlag = 0;
     return (NsHandle *) self;
 }

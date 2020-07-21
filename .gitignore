@@ -1,4 +1,8 @@
 *.iml
+*.o
+*.a
+*.so
+.gitignore
 local.properties
 /.gradle
 /.idea
