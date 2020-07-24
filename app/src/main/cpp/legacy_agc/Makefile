@@ -1,5 +1,6 @@
 #COMPILIE_PREFIX = arm-openwrt-linux-muslgnueabi-
 CC = $(COMPILIE_PREFIX)g++
+LD = $(COMPILIE_PREFIX)ld
 AR = $(COMPILIE_PREFIX)ar
 
 BASE_PATH=$(PWD)
@@ -40,9 +41,13 @@ OBJS_CPP := ${patsubst %.cc, %.o, $(SRCS_CPP)}
 OBJS := $(OBJS_C) $(OBJS_CPP)
 
 
-CFLAGS = -Wall -g  -fPIC $(INC_PATH) -std=c++14
+TARGET_NAME := ligAgc
+CFLAGS = -Wall -g  -fPIC $(INC_PATH) -std=c++14 -fno-stack-protector
 LDFLAGS = 
-TARGET := libAgc.a
+SHARE = -shared
+TARGET_LIB:=$(TARGET_NAME).a
+TARGET_SO:=$(TARGET_NAME).so
+TARGET := $(TARGET_LIB) $(TARGET_SO)
 
 all:$(TARGET)
 
@@ -54,8 +59,11 @@ $(OBJS_CPP):%.o:%.cc
 	@echo $(BASE_PATH)
 	$(CC) $(CFLAGS) -c $^ -o $@
 
-$(TARGET):$(OBJS)
+$(TARGET_LIB):$(OBJS)
 	$(AR) cq $@ $^
+
+$(TARGET_SO):$(OBJS)
+	$(LD) -o $@ $^ $(SHARE) $(LDFLAGS)
 
 clean:
 	rm -f $(OBJS_CPP) $(OBJS_C) $(TARGET) 

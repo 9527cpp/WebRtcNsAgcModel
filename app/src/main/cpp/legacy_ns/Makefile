@@ -1,5 +1,6 @@
 #COMPILIE_PREFIX = arm-openwrt-linux-muslgnueabi-
 CC = $(COMPILIE_PREFIX)g++
+LD = $(COMPILIE_PREFIX)ld
 AR = $(COMPILIE_PREFIX)ar
 
 BASE_PATH=$(PWD)
@@ -51,7 +52,7 @@ OBJS_CPP := ${patsubst %.cc, %.o, $(SRCS_CPP)}
 OBJS := $(OBJS_C) $(OBJS_CPP)
 
 
-CFLAGS = -Wall -g  -fPIC $(INC_PATH) -std=c++14
+CFLAGS = -Wall -g  -fPIC $(INC_PATH) -std=c++14 -fno-stack-protector
 LDFLAGS = -lm
 SHARE = -shared
 TARGET_LIB := libAns.a
@@ -60,7 +61,7 @@ TARGET_SO := libAns.so
 
 TGT :=
 TGT +=$(TARGET_LIB)
-# TGT +=$(TARGET_SO)
+TGT +=$(TARGET_SO)
 all:$(TGT)
 
 $(OBJS_C):%.o:%.c
@@ -75,7 +76,7 @@ $(TARGET_LIB):$(OBJS)
 	$(AR) rcs  $@ $^
 
 $(TARGET_SO):$(OBJS)
-	$(CC) -o $@ $^ $(SHARED) $(LDFLAGS)
+	$(LD) -o $@ $^ $(SHARE) $(LDFLAGS)
 
 clean:
 	rm -f $(OBJS_CPP) $(OBJS_C) $(TARGET_LIB) $(TARGET_SO) 
